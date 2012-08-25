@@ -5,7 +5,12 @@
     <script src="http://underscorejs.org/underscore-min.js" type="text/javascript"></script>
     <script src="js/gh3.js" type="text/javascript"></script>
     <script type="text/javascript">
-    
+        var login = "elbiczel"; // TODO(elbiczel): retrieve username from url parameter
+        var user = new Gh3.User(login);
+        var repositories = new Gh3.Repositories(user);
+        repositories.fetch({ page: 1, per_page: 500 }, "first", function() {
+              console.log(repositories);  
+        });
     </script>
   </head>
   <body>
