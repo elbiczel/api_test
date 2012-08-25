@@ -9,15 +9,51 @@
             $(".editor").githubFetchFile("elbiczel", "api_test", "5aaadaa81336db08af6116839547e6cf26c09137");
         });
     </script>
+    
+    <!-- Ace stuff -->
+    <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/twilight.js" type="text/javascript" charset="utf-8"></script>
+    
+    
+    <!-- Styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/bootstrap.js"></script>
+    
   </head>
   <body>
-    <h1>Edit</h1>
-    <div class="editor">
-      Lorem ipsum
-    </div>
-    <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var editor = ace.edit("editor");
-    </script>
+  
+    <nav class="navbar">
+        <div class="navbar-inner">
+        <div class="container">
+			<a class="brand" href="index.html">Awesome editor</a>
+			<div class="nav-collapse">
+				<ul class="nav">
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    </nav>
+    
+    <section class="container">
+        
+        	<section class="hero-unit">
+				<h1>Edit your file!</h1>
+				<br>
+				<br>
+  				<div id="editor">
+                  Lorem ipsum
+                </div>
+                <script>
+                    var editor = ace.edit("editor");
+                    editor.setTheme("ace/theme/twilight");
+                </script>
+			</section>
+            
+		</section>
+        <div style="clear:both;"></div>
   </body>
 </html>
