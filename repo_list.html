@@ -27,7 +27,7 @@
             $repo.addClass('closed').removeClass('opened');
         }
         var attachClickHandlerToRepoElement = function($li) {
-            $li.click() {
+            $li.click(function {
                 var $this = $(this);
                 var path = $this.attr('x-content').path;
                 if ($this.hasClass('file')) {
@@ -35,7 +35,7 @@
                 } else if ($this.hasClass('dir')) {
                     alert('open directory: ' + path);    
                 }
-            }
+            });
         }
         var renderContentElem = function(content) {
             $li = $('<li>').html($('<div>').html(content.path)).addClass(content.type);
