@@ -4,16 +4,12 @@
      * 
      * @param user String name of the user
      * @param repo String repository of the user above
-     * @param file? String absolute path to file
-     * @param commit? String sha, branch name or tag name
      * @return String contents of the file
      */
-    $.fn.githubFetchFile = function (user, repo, file, commit) {
+    $.fn.githubFetchFile = function (user, repo, sha) {
         var $this = $(this);
-        file = typeof file !== "undefined" ? file : "/README.md";
-        commit = typeof commit !== "undefined" ? commit : "HEAD";
-        $.get("https://raw.github.com/" + user + "/" + repo + "/" + commit + file, function (data) {
-            $this.val(data);
+        $.getJSON("https://api.github.com/repos/" + user + "/" + repo + "/git/blobs/" + sha, function (data) {
+            $this.html(data.content);
         });
     }
 })(jQuery);
