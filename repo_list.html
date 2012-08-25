@@ -1,13 +1,14 @@
 <!doctype html>
 <html>
   <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
-    <script src="http://underscorejs.org/underscore-min.js" type="text/javascript"></script>
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/underscore.js" type="text/javascript"></script>
     <script src="js/gh3.js" type="text/javascript"></script>
     <script type="text/javascript">
         var login = "elbiczel"; // TODO(elbiczel): retrieve username from url parameter
         var user = new Gh3.User(login);
         var repositories = new Gh3.Repositories(user);
+        var repositoryElements = {};
         var renderRepos = function(repos) {
             var list = $('<ul>');
             var liElements = _.map(repos, function(repo) {
@@ -29,7 +30,9 @@
         var attachClickHandlerToRepoElement = function($li) {
             $li.click(function() {
                 var $this = $(this);
-                var path = $this.attr('x-content').path;
+                var key = $this.attr('x-repo') + ":" + $this.attr('x-path');
+                var elem = repositoryElements[key];
+                var path = elem.path;
                 if ($this.hasClass('file')) {
                     alert('open file: ' + path);    
                 } else if ($this.hasClass('dir')) {
@@ -37,9 +40,9 @@
                 }
             });
         }
-        var renderContentElem = function(content) {
+        var renderContentElem = function(content, repo) {
             $li = $('<li>').html($('<div>').html(content.path)).addClass(content.type);
-            $li.attr('x-content', content);
+            $li.attr('x-path', content.path).attr('x-repo', repo);
             attachClickHandlerToRepoElement($li);
             return $li;
         }
@@ -51,7 +54,8 @@
                     var master = repo.getBranchByName('master'); // TODO(biczel): allow branch switching.
                     master.fetchContents(function() {
                         master.eachContent(function (content) {
-                            var $contentElem = renderContentElem(content);
+                            repositoryElements[$repo.attr('x-repo') + ":" + content.path] = content;
+                            var $contentElem = renderContentElem(content, $repo.attr('x-repo'));
                             $contentElem.appendTo($ul);
                         });
                         $ul.appendTo($repo);
