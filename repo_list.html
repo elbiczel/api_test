@@ -26,7 +26,7 @@
             $repo.html($repo.attr('x-repo'));
             $repo.addClass('closed').removeClass('opened');
         }
-        var renderContentElem(content) {
+        var renderContentElem = function(content) {
             $li = $('<li>').html(content.path).addClass(content.type);
             $li.attr('x-content', content);
             return $li;
@@ -66,44 +66,9 @@
         };
         repositories.fetch({ page: 1, per_page: 500 }, "first", listRepos);
     </script>
-    
-    
-    
-    <!-- Styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <script src="js/bootstrap.js"></script>
-    
   </head>
   <body>
-  
-    <nav class="navbar">
-        <div class="navbar-inner">
-        <div class="container">
-    		<a class="brand" href="index.html">Awesome editor</a>
-			<div class="nav-collapse">
-				<ul class="nav">
-					<li>
-						<a href="index.html">Home</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-    </nav>
-    
-    <section class="container">
-        
-            <section class="hero-unit">
-				<h1>Select your file!</h1>
-				<br>
-				<br>
-  				<nav id="repo_list">
-                </nav>
-			</section>
-            
-		</section>
-    
-  
+  <nav id="repo_list">
+  </nav>
   </body>
 </html>
