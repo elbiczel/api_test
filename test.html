@@ -11,18 +11,18 @@
 	<ul></ul>
 	<textarea></textarea>
 </body>
-<script src="../vendors/jquery-1.7.2.js"></script>
-<script src="../vendors/underscore.js"></script>
-<script src="../gh3.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="js/gh3.js"></script>
 <script>
-
-	var k33g = new Gh3.User("k33g")
+  var fileName = "fetch.js";
+	var k33g = new Gh3.User("elbiczel")
 	,	repoTitle = $("h1")
 	,	branchTitle = $("h2")
 	,	branchContents = $("ul")
 	,	rawContent = $("textarea");
 
-	var k33gBlog = new Gh3.Repository("k33g.github.com", k33g);
+	var k33gBlog = new Gh3.Repository("api_test", k33g);
 
 	k33gBlog.fetch(function (err, res) {
 		if(err) { throw "outch ..." }
@@ -51,7 +51,7 @@
 
 				myfile.fetchContent(function (err, res) {
 					if(err) { throw "outch ..." }
-
+          
 					rawContent.text(myfile.getRawContent());
 				});
 
