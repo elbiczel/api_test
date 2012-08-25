@@ -1,4 +1,4 @@
-jQuery(function ($) {
+(function ($) {
     /**
      * Fetches given file contents from github.
      * 
@@ -13,4 +13,4 @@ jQuery(function ($) {
         commit = typeof commit !== "undefined" ? commit : "HEAD";
         return $.get("https://raw.github.com/" + user + "/" + repo + "/" + commit + file);
     }
-});
+})(jQuery);
