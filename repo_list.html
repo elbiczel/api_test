@@ -28,27 +28,26 @@
             $repo.addClass('closed').removeClass('opened');
         }
         var attachClickHandlerToRepoElement = function($li) {
-            $li.click(function() {
-                var $this = $(this);
+            $li.find('div').click(function() {
                 $ul = $('<ul>').addClass('repo_content');
-                var key = $this.attr('x-repo') + ":" + $this.attr('x-path');
+                var key = $li.attr('x-repo') + ":" + $li.attr('x-path');
                 var elem = repositoryElements[key];
                 var path = elem.path;
-                if ($this.hasClass('file')) {
+                if ($li.hasClass('file')) {
                     window.location.href = 'edit.html'; 
-                } else if ($this.hasClass('dir') && $this.hasClass('closed')) {
+                } else if ($li.hasClass('dir') && $li.hasClass('closed')) {
                     elem.fetchContents(function() {
                         elem.eachContent(function (content) {
-                            repositoryElements[$this.attr('x-repo') + ":" + content.path] = content;
-                            var $contentElem = renderContentElem(content, $this.attr('x-repo'));
+                            repositoryElements[$li.attr('x-repo') + ":" + content.path] = content;
+                            var $contentElem = renderContentElem(content, $li.attr('x-repo'));
                             $contentElem.appendTo($ul);
                         });
-                        $ul.appendTo($this);
+                        $ul.appendTo($li);
                     });
-                    $this.removeClass('closed').addClass('opened');
-                } else if ($this.hasClass('dir') && $this.hasClass('opened')) {
-                    $this.removeClass('opened').addClass('closed');
-                    $this.find('li').remove();
+                    $li.removeClass('closed').addClass('opened');
+                } else if ($li.hasClass('dir') && $li.hasClass('opened')) {
+                    $li.removeClass('opened').addClass('closed');
+                    $li.find('li').remove();
                 }
             });
         }
