@@ -26,8 +26,26 @@
             $repo.html($repo.attr('x-repo'));
             $repo.addClass('closed').removeClass('opened');
         }
+        var renderContentElem = function(content) {
+            $li = $('<li>').html(content.path).addClass(content.type);
+            $li.attr('x-content', content);
+            return $li;
+        }
         var openRepository = function($repo) {
-            $repo.append('<br>opened');
+            var repo = repositories.getRepositoryByName($repo.attr('x-repo'));
+            $ul = $('<ul>').addClass('repo_content');
+            repo.fetch(function() {
+                repo.fetchBranches(function() {
+                    var master = repo.getBranchByName('master'); // TODO(biczel): allow branch switching.
+                    master.fetchContents(function() {
+                        master.eachContent(function (content) {
+                            var $contentElem = renderContentElem(content);
+                            $contentElem.appendTo($ul);
+                        });
+                        $ul.appendTo($repo);
+                    });
+                });    
+            });
             $repo.addClass('opened').removeClass('closed');    
         }
         var addClickHandlers = function() {
