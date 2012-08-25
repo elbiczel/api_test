@@ -22,11 +22,11 @@
             });
             return list;
         }
-        var closeRepository($repo) {
+        var closeRepository = function($repo) {
             $repo.html($repo.attr('x-repo'));
             $repo.addClass('closed').removeClass('opened');
         }
-        var openReposotur($repo) {
+        var openReposotur = function($repo) {
             $repo.append('<br>opened');
             $repo.addClass('opened').removeClass('closed');    
         }
