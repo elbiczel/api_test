@@ -52,10 +52,11 @@
 				<br>
   				<div id="editor"></div>
                 <script>
-                    var editor = ace.edit("editor");
+                    editor = ace.edit("editor");
                     editor.setTheme("ace/theme/twilight");
                 </script>
                 <a href="" class="save-button btn btn-primary btn-large" >Save</a>
+                <a href="javascript:editor.undo()" class="save-button btn btn-primary btn-large" >Undo</a>
 			</section>
             
 		</section>
