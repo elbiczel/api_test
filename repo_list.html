@@ -14,7 +14,7 @@
                 var li = $('<li>').addClass('repo').addClass('closed');
                 var repoName = repo.name;
                 li.attr('x-repo', repoName);
-                li.html(repoName);
+                li.html($('<div>').addClass('title').html(repoName));
                 return li;
             });
             _.each(liElements, function(liElement) {
@@ -26,17 +26,35 @@
             $repo.html($repo.attr('x-repo'));
             $repo.addClass('closed').removeClass('opened');
         }
+        var renderContentElem = function(content) {
+            $li = $('<li>').html(content.path).addClass(content.type);
+            $li.attr('x-content', content);
+            return $li;
+        }
         var openRepository = function($repo) {
-            $repo.append('<br>opened');
+            var repo = repositories.getRepositoryByName($repo.attr('x-repo'));
+            $ul = $('<ul>').addClass('repo_content');
+            repo.fetch(function() {
+                repo.fetchBranches(function() {
+                    var master = repo.getBranchByName('master'); // TODO(biczel): allow branch switching.
+                    master.fetchContents(function() {
+                        master.eachContent(function (content) {
+                            var $contentElem = renderContentElem(content);
+                            $contentElem.appendTo($ul);
+                        });
+                        $ul.appendTo($repo);
+                    });
+                });    
+            });
             $repo.addClass('opened').removeClass('closed');    
         }
         var addClickHandlers = function() {
-            $('#repo_list li').click(function() {
-                $this = $(this);
-                if ($this.hasClass('opened')) {
-                    closeRepository($this);    
+            $('#repo_list li .title').click(function() {
+                $parent = $(this).parents('li');
+                if ($parent.hasClass('opened')) {
+                    closeRepository($parent);    
                 } else {
-                    openRepository($this);    
+                    openRepository($parent);    
                 }
             });
         };
@@ -48,44 +66,9 @@
         };
         repositories.fetch({ page: 1, per_page: 500 }, "first", listRepos);
     </script>
-    
-    
-    
-    <!-- Styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <script src="js/bootstrap.js"></script>
-    
   </head>
   <body>
-  
-    <nav class="navbar">
-        <div class="navbar-inner">
-        <div class="container">
-    		<a class="brand" href="index.html">Awesome editor</a>
-			<div class="nav-collapse">
-				<ul class="nav">
-					<li>
-						<a href="index.html">Home</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-    </nav>
-    
-    <section class="container">
-        
-            <section class="hero-unit">
-				<h1>Select your file!</h1>
-				<br>
-				<br>
-  				<nav id="repo_list">
-                </nav>
-			</section>
-            
-		</section>
-    
-  
+  <nav id="repo_list">
+  </nav>
   </body>
 </html>
