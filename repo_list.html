@@ -8,11 +8,29 @@
         var login = "elbiczel"; // TODO(elbiczel): retrieve username from url parameter
         var user = new Gh3.User(login);
         var repositories = new Gh3.Repositories(user);
-        repositories.fetch({ page: 1, per_page: 500 }, "first", function() {
-              console.log(repositories);  
-        });
+        var renderRepos(repos) {
+            var list = $('<ul>');
+            var liElements = _.map(repos, function(repo) {
+                var li = $('<li>').addClass('repo');
+                var repoName = repo.name;
+                li.attr('x-repo', repoName);
+                li.html(repoName);
+            });
+            _.each(liElements, function(liElement) {
+                list.append(liElement); 
+            });
+            list.appendTo("#repo_list");
+        }
+        var listRepos = function() {
+            var repos = repositories.getRepositories();
+            var renderedRepos = renderRepos(repos);
+            $('repo_list').html(renderedRepos);
+        };
+        repositories.fetch({ page: 1, per_page: 500 }, "first", listRepos);
     </script>
   </head>
   <body>
+  <nav id="repo_list">
+  </nav>
   </body>
 </html>
