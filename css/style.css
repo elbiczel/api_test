@@ -14,3 +14,9 @@
  float: right;
  margin: 50px;
 }
+
+#editor {
+    position: absolute;
+    width: 500px;
+    height: 400px;
+}
