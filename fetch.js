@@ -17,7 +17,9 @@
                 var file = master.getFileByName(filename);
                 file.fetchContent(function (error, response) {
                     $('#filename').html(filename);
-                    ace.edit("editor").insert(file.getRawContent());
+                    var editor = ace.edit("editor");
+                    editor.insert(file.getRawContent());
+                    editor.navigateTo(0, 0);
                 });
             });
         });
