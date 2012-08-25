@@ -23,7 +23,7 @@
             return list;
         }
         var closeRepository = function($repo) {
-            $repo.html($repo.attr('x-repo'));
+            $repo.find('li').remove();
             $repo.addClass('closed').removeClass('opened');
         }
         var renderContentElem = function(content) {
