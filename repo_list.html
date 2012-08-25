@@ -14,7 +14,7 @@
                 var li = $('<li>').addClass('repo').addClass('closed');
                 var repoName = repo.name;
                 li.attr('x-repo', repoName);
-                li.html(repoName);
+                li.html($('<div>').addClass('title').html(repoName));
                 return li;
             });
             _.each(liElements, function(liElement) {
@@ -23,7 +23,7 @@
             return list;
         }
         var closeRepository = function($repo) {
-            $repo.html($repo.attr('x-repo'));
+            $repo.find('li').remove();
             $repo.addClass('closed').removeClass('opened');
         }
         var renderContentElem = function(content) {
@@ -49,12 +49,12 @@
             $repo.addClass('opened').removeClass('closed');    
         }
         var addClickHandlers = function() {
-            $('#repo_list li').click(function() {
-                $this = $(this);
-                if ($this.hasClass('opened')) {
-                    closeRepository($this);    
+            $('#repo_list li .title').click(function() {
+                $parent = $(this).parents('li');
+                if ($parent.hasClass('opened')) {
+                    closeRepository($parent);    
                 } else {
-                    openRepository($this);    
+                    openRepository($parent);    
                 }
             });
         };
