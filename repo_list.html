@@ -3,22 +3,14 @@
   <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
     <script src="http://underscorejs.org/underscore-min.js" type="text/javascript"></script>
+    <script src="js/gh3.js" type="text/javascript"></script>
     <script type="text/javascript">
-    
-    function loadRepositories(userName, callback) {
-        var githubLogin = userName || 'elbiczel';
-        var githubUrl = ['https://api.github.com/users', githubLogin, 'repos'].join('/');
-        $.ajax(githubUrl, function(data) {
-            console.log(data);
-            if (callback) {
-                callback(data);       
-            }
-        }, 'jsonp');
-    }
-    
-    $(function() {
-        loadRepositories();
-    });
+        var login = "elbiczel"; // TODO(elbiczel): retrieve username from url parameter
+        var user = new Gh3.User(login);
+        var repositories = new Gh3.Repositories(user);
+        repositories.fetch({ page: 1, per_page: 500 }, "first", function() {
+              console.log(repositories);  
+        });
     </script>
   </head>
   <body>

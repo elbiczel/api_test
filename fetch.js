@@ -9,8 +9,11 @@
      * @return String contents of the file
      */
     $.fn.githubFetchFile = function (user, repo, file, commit) {
+        var $this = $(this);
         file = typeof file !== "undefined" ? file : "/README.md";
         commit = typeof commit !== "undefined" ? commit : "HEAD";
-        return $.get("https://raw.github.com/" + user + "/" + repo + "/" + commit + file);
+        $.get("https://raw.github.com/" + user + "/" + repo + "/" + commit + file, function (data) {
+            $this.val(data);
+        });
     }
 })(jQuery);
