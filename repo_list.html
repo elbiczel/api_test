@@ -8,7 +8,7 @@
         var login = "elbiczel"; // TODO(elbiczel): retrieve username from url parameter
         var user = new Gh3.User(login);
         var repositories = new Gh3.Repositories(user);
-        var renderRepos(repos) {
+        var renderRepos = function(repos) {
             var list = $('<ul>');
             var liElements = _.map(repos, function(repo) {
                 var li = $('<li>').addClass('repo');
@@ -19,12 +19,12 @@
             _.each(liElements, function(liElement) {
                 list.append(liElement); 
             });
-            list.appendTo("#repo_list");
+            return list;
         }
         var listRepos = function() {
             var repos = repositories.getRepositories();
             var renderedRepos = renderRepos(repos);
-            $('repo_list').html(renderedRepos);
+            renderedRepos.appendTo('#repo_list');
         };
         repositories.fetch({ page: 1, per_page: 500 }, "first", listRepos);
     </script>
