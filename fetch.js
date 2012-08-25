@@ -16,8 +16,8 @@
             master.fetchContents(function (error, response) {
                 var file = master.getFileByName(filename);
                 file.fetchContent(function (error, response) {
-                    console.log(file.getRawContent());
-                    $this.text(file.getRawContent());
+                    $('#filename').html(filename);
+                    ace.edit("editor").insert(file.getRawContent());
                 });
             });
         });
