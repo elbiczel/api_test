@@ -15,6 +15,7 @@
                 var repoName = repo.name;
                 li.attr('x-repo', repoName);
                 li.html(repoName);
+                return li;
             });
             _.each(liElements, function(liElement) {
                 list.append(liElement); 
