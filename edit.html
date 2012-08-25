@@ -13,10 +13,7 @@
     <!-- Ace stuff -->
     <script src="js/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/twilight.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/twilight");
-    </script>
+    
     
     <!-- Styles -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -50,7 +47,13 @@
   				<div id="editor">
                   Lorem ipsum
                 </div>
+                <script>
+                    var editor = ace.edit("editor");
+                    editor.setTheme("ace/theme/twilight");
+                </script>
 			</section>
+            
 		</section>
+        <div style="clear:both;"></div>
   </body>
 </html>
