@@ -26,9 +26,21 @@
             $repo.find('li').remove();
             $repo.addClass('closed').removeClass('opened');
         }
+        var attachClickHandlerToRepoElement = function($li) {
+            $li.click() {
+                var $this = $(this);
+                var path = $this.attr('x-content').path;
+                if ($this.hasClass('file')) {
+                    alert('open file: ' + path);    
+                } else if ($this.hasClass('dir')) {
+                    alert('open directory: ' + path);    
+                }
+            }
+        }
         var renderContentElem = function(content) {
-            $li = $('<li>').html(content.path).addClass(content.type);
+            $li = $('<li>').html($('<div>').html(content.path)).addClass(content.type);
             $li.attr('x-content', content);
+            attachClickHandlerToRepoElement($li);
             return $li;
         }
         var openRepository = function($repo) {
