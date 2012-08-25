@@ -5,9 +5,33 @@
     <script src="http://underscorejs.org/underscore-min.js" type="text/javascript"></script>
     <script src="js/gh3.js" type="text/javascript"></script>
     <script type="text/javascript">
-    
+        var login = "elbiczel"; // TODO(elbiczel): retrieve username from url parameter
+        var user = new Gh3.User(login);
+        var repositories = new Gh3.Repositories(user);
+        var renderRepos = function(repos) {
+            var list = $('<ul>');
+            var liElements = _.map(repos, function(repo) {
+                var li = $('<li>').addClass('repo');
+                var repoName = repo.name;
+                li.attr('x-repo', repoName);
+                li.html(repoName);
+                return li;
+            });
+            _.each(liElements, function(liElement) {
+                list.append(liElement); 
+            });
+            return list;
+        }
+        var listRepos = function() {
+            var repos = repositories.getRepositories();
+            var renderedRepos = renderRepos(repos);
+            renderedRepos.appendTo('#repo_list');
+        };
+        repositories.fetch({ page: 1, per_page: 500 }, "first", listRepos);
     </script>
   </head>
   <body>
+  <nav id="repo_list">
+  </nav>
   </body>
 </html>
